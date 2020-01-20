@@ -1,3 +1,6 @@
-# KoControl
+# NetHunter Kernel Modules - Loader APK
 
-Simply .ko loader App for android
+A simple kernel (.ko) loader app for Android
+
+Credits goes to @faust93 for providing us the source of the loader.
+

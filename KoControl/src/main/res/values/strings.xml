@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">KoControl</string>
+    <string name="app_name">NetHunter Kernel Modules</string>
     <string name="help">Help</string>
     <string name="modules">Modules</string>
     <string name="set_on_boot">Start On Boot</string>
-    <string name="app_desc">This app makes possible to load desired kernel modules at boot time or in manual mode without the need to edit init.d scripts. Be noticed that rooted device required for this app to work!</string>
+    <string name="app_desc">This app makes possible to load desired kernel modules at boot time or in manual mode without the need to edit init.d scripts. Remember, a rooted device is required for this app to work!</string>
     <string name="how_to">How To Use</string>
     <string name="app_help">ModuleName is the kernel module name.\n\nCheckBox sets the module to load at boot time.\n\nOn/Off Switch allows to load/unload module manually.</string>
 

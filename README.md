@@ -1,4 +1,4 @@
-# NetHunter Kernel Modules - Loader APK
+# NetHunter Kernel Modules
 
 A simple kernel (.ko) loader app for Android
 

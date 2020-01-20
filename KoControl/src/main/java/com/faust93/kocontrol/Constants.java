@@ -5,7 +5,7 @@ package com.faust93.kocontrol;
  */
 public interface Constants {
 
-    public static final String APP_TAG = "koControl";
-    public static final String MOD_DIR = "/system/lib/modules";
-    public static final String PREF_FILE_NAME = "kocontrol.prefs";
+    String APP_TAG = "koControl";
+    String MOD_DIR = "/system/lib/modules";
+    String PREF_FILE_NAME = "kocontrol.prefs";
 }

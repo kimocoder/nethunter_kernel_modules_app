@@ -2,7 +2,9 @@ package com.faust93.kocontrol;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 /**
  * Created by faust93 on 09.08.13.
@@ -30,15 +33,16 @@ public class ModulesFragment extends Fragment implements Constants {
     private SharedPreferences preferences;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        preferences = getActivity().getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        preferences = Objects.requireNonNull(getActivity()).getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
 
         View myView = inflater.inflate(R.layout.fragment_modules, container, false);
-        mModulesView = (LinearLayout) myView.findViewById(R.id.ui_modules_view);
+        mModulesView = myView.findViewById(R.id.ui_modules_view);
 
-        Switch enabledSwitch = (Switch) myView.findViewById(R.id.ui_enabled_switch);
+        Switch enabledSwitch = myView.findViewById(R.id.ui_enabled_switch);
         enabledSwitch.setChecked(preferences.getBoolean("onBoot", false));
         enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
              public void onCheckedChanged(CompoundButton cbBox, boolean isChecked) {
@@ -47,7 +51,7 @@ public class ModulesFragment extends Fragment implements Constants {
                     editor.putBoolean("onBoot", true);
                      else
                     editor.putBoolean("onBoot", false);
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -70,18 +74,20 @@ public class ModulesFragment extends Fragment implements Constants {
         });
 
         int i = 0;
-        for(File file:modules){
-          genModuleRow(file.getName(), mModulesView,i++);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            for(File file: Objects.requireNonNull(modules)){
+              genModuleRow(file.getName(), mModulesView,i++);
+            }
         }
     }
 
-    private View genModuleRow(String name, ViewGroup parent, int index) throws Exception {
-        LayoutInflater inflater = LayoutInflater.from((Context) getActivity());
+    private void genModuleRow(String name, ViewGroup parent, int index) throws Exception {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
         LinearLayout view = (LinearLayout) inflater.inflate(R.layout.module_row, parent, false);
 
-        TextView moduleName = (TextView) view.findViewById(R.id.ui_module_name);
-        CheckBox atBoot = (CheckBox) view.findViewById(R.id.ui_at_boot);
-        Switch stateSwitch = (Switch) view.findViewById(R.id.ui_module_switch);
+        TextView moduleName = view.findViewById(R.id.ui_module_name);
+        CheckBox atBoot = view.findViewById(R.id.ui_at_boot);
+        Switch stateSwitch = view.findViewById(R.id.ui_module_switch);
 
         moduleName.setText(name);
         stateSwitch.setId(index);
@@ -98,7 +104,7 @@ public class ModulesFragment extends Fragment implements Constants {
                 } else {
                     editor.putBoolean(modules[cbBox.getId()].getName(), false);
                 }
-                    editor.commit();
+                    editor.apply();
             }
         });
 
@@ -130,20 +136,19 @@ public class ModulesFragment extends Fragment implements Constants {
         });
         parent.addView(view);
 
-        return view;
     }
 
     /* do check if module already loaded */
     private boolean checkModule(String moduleName) throws Exception {
 
-        Process process = null;
+        Process process;
 
         Log.d(APP_TAG, "checkModule() entry: " + moduleName);
 
         process = Runtime.getRuntime().exec("lsmod");
 
         BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = null;
+        String line;
         while ((line = in.readLine()) != null) {
             Log.d(APP_TAG, "Line: " + line);
             if (line.contains(moduleName.replace("-","_"))) {

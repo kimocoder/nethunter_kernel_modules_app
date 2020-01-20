@@ -46,10 +46,7 @@ public class Utils implements Constants {
                     input.close();
                 }
 
-                if(process.exitValue() == 0)
-                    rc = false;
-                else
-                    rc = true;
+                rc = process.exitValue() != 0;
 
                 process.destroy();
                 return rc;

@@ -1,5 +1,6 @@
 package com.faust93.kocontrol;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,8 +20,8 @@ public class KoControl extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerTabStrip pagerTabStrip = (PagerTabStrip) findViewById(R.id.pagerTabStrip);
+        mViewPager = findViewById(R.id.viewpager);
+        PagerTabStrip pagerTabStrip = findViewById(R.id.pagerTabStrip);
             pagerTabStrip.setDrawFullUnderline(true);
             pagerTabStrip.setTabIndicatorColor(Color.parseColor("#33B5E5"));
 
@@ -30,8 +31,8 @@ public class KoControl extends FragmentActivity {
     }
 
     public class TitleAdapter extends FragmentPagerAdapter {
-        private final String titles[] = new String[] {getResources().getString(R.string.modules), getResources().getString(R.string.help) };
-        private final Fragment frags[] = new Fragment[titles.length];
+        private final String[] titles = new String[] {getResources().getString(R.string.modules), getResources().getString(R.string.help) };
+        private final Fragment[] frags = new Fragment[titles.length];
 
         public TitleAdapter(FragmentManager fm) {
             super(fm);
@@ -39,6 +40,7 @@ public class KoControl extends FragmentActivity {
             frags[1] = new HelpFragment();
         }
 
+        @SuppressLint("LongLogTag")
         @Override
         public CharSequence getPageTitle(int position) {
             Log.v("TitleAdapter - getPageTitle=", titles[position]);
@@ -61,7 +63,7 @@ public class KoControl extends FragmentActivity {
 
     }
     @Override
-    public void onSaveInstanceState(Bundle SavedInstanceState){
-
+    public void onSaveInstanceState(Bundle SavedInstanceState) {
+        super.onSaveInstanceState(SavedInstanceState);
     }
 }

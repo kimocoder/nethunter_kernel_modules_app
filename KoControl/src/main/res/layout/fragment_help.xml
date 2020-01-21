@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/CodeFont"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:text="@string/app_desc"
         android:layout_gravity="center_horizontal"/>
 
@@ -41,34 +41,14 @@
         android:text="@string/how_to"
         android:layout_gravity="center_horizontal" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="7dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="ModuleName"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="1dp" />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/CodeFont"
-        android:textColor="#FFFFFF"
+        android:layout_width="wrap_content"
+        android:layout_height="106dp"
+        android:layout_gravity="center_horizontal"
         android:maxLines="10"
-        android:textSize="14dp"
         android:text="@string/app_help"
-        android:layout_gravity="center_horizontal"/>
+        android:textColor="#000000"
+        android:textSize="14dp" />
 
 </LinearLayout>
